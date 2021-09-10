@@ -102,7 +102,7 @@ const refreshAccessToken = async (req, res) => {
 			});
 		}
 
-		const user = await User.findOne(decodedToken.id);
+		const user = await User.findById(decodedToken.id);
 
 		if (!user) {
 			return res.status(401).json({

@@ -34,6 +34,7 @@ app.use(validateJwt());
 })();
 
 app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
 
 app.listen(process.env.PORT, () =>
 	console.log(`Server started on port ${process.env.PORT}`)
