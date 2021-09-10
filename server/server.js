@@ -2,15 +2,17 @@ if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config();
 }
 const express = require('express');
+const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
-const app = express();
+const cookieParser = require('cookie-parser');
 
 // custom middlewares
 const validateJwt = require('./middlewares/validateJwt');
 
 // routers
 const authRouter = require('./routes/auth');
+const usersRouter = require('./routes/users');
 
 app.use(
 	cors({
@@ -19,6 +21,7 @@ app.use(
 	})
 );
 app.use(express.json());
+app.use(cookieParser());
 app.use(validateJwt());
 
 (async () => {

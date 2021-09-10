@@ -3,12 +3,13 @@ const User = require('../models/User');
 
 const validateJwt = () => async (req, res, next) => {
 	try {
-		const authHeader = req.headers['Authorization'];
+		const authHeader = req.headers['authorization'];
 		const accessToken = authHeader && authHeader.split(' ')[1];
 
 		if (!accessToken) {
 			req.isAuthenticated = false;
 			req.user = null;
+			return next();
 		}
 
 		const isValidToken = await verify(
