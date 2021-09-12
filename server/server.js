@@ -13,6 +13,7 @@ const validateJwt = require('./middlewares/validateJwt');
 // routers
 const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
+const notesRouter = require('./routes/notes');
 
 app.use(
 	cors({
@@ -35,6 +36,7 @@ app.use(validateJwt());
 
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/notes', notesRouter);
 
 app.listen(process.env.PORT, () =>
 	console.log(`Server started on port ${process.env.PORT}`)
