@@ -35,12 +35,12 @@ const userSchema = mongoose.Schema(
 userSchema
 	.virtual('name')
 	.get(function () {
-		return this.firstName + ' ' + this.lastName;
+		return `${this.firstName}${this.lastName ? ` ${this.lastName}` : ''}`;
 	})
 	.set(function (name) {
 		const [firstName, lastName] = name.split(' ');
 		this.firstName = firstName;
-		this.lastName = lastName;
+		this.lastName = lastName ?? '';
 	});
 
 module.exports = mongoose.model('User', userSchema);

@@ -18,7 +18,15 @@ const loginUser = async (req, res) => {
 				message: 'Password doesnot match',
 			});
 		}
-		const { id } = user;
+		const {
+			id,
+			firstName,
+			lastName,
+			name,
+			displayPicture,
+			createdAt,
+			updatedAt,
+		} = user;
 
 		const accessToken = await signToken(
 			{ id },
@@ -42,6 +50,15 @@ const loginUser = async (req, res) => {
 
 		res.status(200).json({
 			message: 'Successfully logged in',
+			user: {
+				id,
+				firstName,
+				lastName,
+				name,
+				displayPicture,
+				createdAt,
+				updatedAt,
+			},
 			accessToken,
 		});
 	} catch (err) {
