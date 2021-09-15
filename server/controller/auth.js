@@ -2,6 +2,8 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const { sign, verify } = require('jsonwebtoken');
 
+const MILLI_SECONDS_IN_A_DAY = 1000 * 60 * 60 * 24;
+
 const loginUser = async (req, res) => {
 	const { email, password } = req.body;
 
@@ -44,9 +46,7 @@ const loginUser = async (req, res) => {
 			}
 		);
 
-		res.cookie('RF_TKN', refreshToken, {
-			httpOnly: true,
-		});
+		setRefreshToken(res, refreshToken);
 
 		res.status(200).json({
 			message: 'Successfully logged in',
@@ -143,9 +143,7 @@ const refreshAccessToken = async (req, res) => {
 			}
 		);
 
-		res.cookie('RF_TKN', newRefreshToken, {
-			httpOnly: true,
-		});
+		setRefreshToken(res, newRefreshToken);
 
 		res.status(200).json({
 			message: 'Successfully refreshed access token',
@@ -177,6 +175,14 @@ async function hashPassword(plainTextPassword) {
 	const salt = await bcrypt.genSalt(10);
 	return await bcrypt.hash(plainTextPassword, salt);
 }
+
 async function signToken(payload, secrect, options) {
 	return await sign(payload, secrect, options);
+}
+
+function setRefreshToken(res, payload) {
+	res.cookie('RF_TKN', payload, {
+		httpOnly: true,
+		expires: MILLI_SECONDS_IN_A_DAY * 7,
+	});
 }
