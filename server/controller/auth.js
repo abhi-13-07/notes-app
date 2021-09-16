@@ -127,6 +127,16 @@ const refreshAccessToken = async (req, res) => {
 			});
 		}
 
+		const {
+			id,
+			firstName,
+			lastName,
+			name,
+			displayPicture,
+			createdAt,
+			updatedAt,
+		} = user;
+
 		const accessToken = await signToken(
 			{ id: user.id },
 			process.env.ACCESS_TOKEN_SECRET,
@@ -147,6 +157,15 @@ const refreshAccessToken = async (req, res) => {
 
 		res.status(200).json({
 			message: 'Successfully refreshed access token',
+			user: {
+				id,
+				firstName,
+				lastName,
+				name,
+				displayPicture,
+				createdAt,
+				updatedAt,
+			},
 			accessToken,
 		});
 	} catch (err) {
@@ -183,6 +202,6 @@ async function signToken(payload, secrect, options) {
 function setRefreshToken(res, payload) {
 	res.cookie('RF_TKN', payload, {
 		httpOnly: true,
-		expires: MILLI_SECONDS_IN_A_DAY * 7,
+		maxAge: MILLI_SECONDS_IN_A_DAY * 7,
 	});
 }
