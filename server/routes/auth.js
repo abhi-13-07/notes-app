@@ -5,10 +5,14 @@ const {
 	refreshAccessToken,
 	logoutUser,
 } = require('../controller/auth');
+const {
+	loginValidator,
+	registerValidator,
+} = require('../middlewares/formValidation');
 
-router.post('/login', loginUser);
+router.post('/login', loginValidator, loginUser);
 
-router.post('/register', registerUser);
+router.post('/register', registerValidator, registerUser);
 
 router.get('/refresh', refreshAccessToken);
 
