@@ -1,10 +1,18 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const { validationResult } = require('express-validator');
 const { sign, verify } = require('jsonwebtoken');
 
 const MILLI_SECONDS_IN_A_DAY = 1000 * 60 * 60 * 24;
 
 const loginUser = async (req, res) => {
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({
+			errors: errors.array(),
+		});
+	}
 	const { email, password } = req.body;
 
 	try {
@@ -70,6 +78,14 @@ const loginUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({
+			errors: errors.array(),
+		});
+	}
+
 	const { name, email, password } = req.body;
 	try {
 		const hashedPassword = await hashPassword(password);
