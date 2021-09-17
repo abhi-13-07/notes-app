@@ -19,13 +19,13 @@ const loginUser = async (req, res) => {
 		const user = await User.findOne({ email });
 		if (!user) {
 			return res.status(404).json({
-				message: `${email} is not registred`,
+				message: `${email} is not registered`,
 			});
 		}
 		const isMatch = await bcrypt.compare(password, user.hashedPassword);
 		if (!isMatch) {
 			return res.status(401).json({
-				message: 'Password doesnot match',
+				message: 'Password does not match',
 			});
 		}
 		const {
