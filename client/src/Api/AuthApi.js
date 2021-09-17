@@ -19,11 +19,11 @@ class AuthApi {
 					withCredentials: true,
 				}
 			);
-			return response.data;
+			return { data: response.data, status: response.status };
 		} catch (err) {
 			console.log(err);
 			if (err.response) {
-				return err.response.data;
+				return { data: err.response.data, status: err.response.status };
 			}
 
 			if (err.request) {
@@ -39,11 +39,11 @@ class AuthApi {
 				email,
 				password,
 			});
-			return response.data;
+			return { data: response.data, status: response.status };
 		} catch (err) {
 			console.log(err);
 			if (err.response) {
-				return err.response.data;
+				return { data: err.response.data, status: err.response.status };
 			}
 
 			if (err.request) {
@@ -54,12 +54,14 @@ class AuthApi {
 
 	async refreshAccessToken() {
 		try {
-			const response = await axios.get(`${this.endpoint}/auth/refresh`);
-			return response.data;
+			const response = await axios.get(`${this.endpoint}/auth/refresh`, {
+				withCredentials: true,
+			});
+			return { data: response.data, status: response.status };
 		} catch (err) {
 			console.log(err);
 			if (err.response) {
-				return err.response.data;
+				return { data: err.response.data, status: err.response.status };
 			}
 
 			if (err.request) {
@@ -73,11 +75,11 @@ class AuthApi {
 			const response = await axios.get(`${this.endpoint}/auth/logout`, {
 				withCredentials: true,
 			});
-			return response.data;
+			return { data: response.data, status: response.status };
 		} catch (err) {
 			console.log(err);
 			if (err.response) {
-				return err.response.data;
+				return { data: err.response.data, status: err.response.status };
 			}
 
 			if (err.request) {

@@ -8,13 +8,16 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }) => {
-	const [accessToken, setAccessToken] = useState();
-	const [user, setUser] = useState();
+	const [accessToken, setAccessToken] = useState('');
+	const [user, setUser] = useState(null);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const getAccessToken = async () => {
-			const response = await authApi.refreshAccessToken();
-			console.log(response);
+			const { data } = await authApi.refreshAccessToken();
+			setAccessToken(data.accessToken);
+			setUser(data.user);
+			setLoading(false);
 		};
 
 		getAccessToken();
@@ -24,12 +27,10 @@ const AuthProvider = ({ children }) => {
 		};
 	}, []);
 
-	useEffect(() => {
-		// TODO: decode jwt
-	}, [accessToken]);
-
 	return (
-		<AuthContext.Provider value={{ accessToken, user, setAccessToken }}>
+		<AuthContext.Provider
+			value={{ accessToken, user, setAccessToken, loading, setUser }}
+		>
 			{children}
 		</AuthContext.Provider>
 	);
