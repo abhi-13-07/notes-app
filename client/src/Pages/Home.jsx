@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuth } from '../Context/AuthProvider';
 import AuthApi from '../Api/AuthApi';
 import { useHistory } from 'react-router-dom';
+import { AppBar, Avatar } from '../Components';
 
 const authApi = new AuthApi();
 
@@ -38,9 +39,17 @@ const Home = () => {
 
 	return (
 		<div>
-			<h1>Home</h1>
-			<pre>{JSON.stringify(user, null, 4)}</pre>
-			<button onClick={handleLogout}>Logout</button>
+			<AppBar>
+				<div>
+					<h2>Notes App</h2>
+				</div>
+				<div>
+					<input type="search" placeholder="Search by title" />
+				</div>
+				<div style={{ cursor: 'pointer' }}>
+					<Avatar src={user.displayPicture} alt={user.name} size="sm" />
+				</div>
+			</AppBar>
 		</div>
 	);
 };
