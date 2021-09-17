@@ -4,6 +4,8 @@ const { validationResult } = require('express-validator');
 const { sign, verify } = require('jsonwebtoken');
 
 const MILLI_SECONDS_IN_A_DAY = 1000 * 60 * 60 * 24;
+const ACCESS_TOKEN_EXPIRY_TIME = process.env.ACCESS_TOKEN_EXPIRY_TIME;
+const REFRESH_TOKEN_EXPIRY_TIME = process.env.REFRESH_TOKEN_EXPIRY_TIME;
 
 const loginUser = async (req, res) => {
 	const errors = validationResult(req);
@@ -42,7 +44,7 @@ const loginUser = async (req, res) => {
 			{ id },
 			process.env.ACCESS_TOKEN_SECRET,
 			{
-				expiresIn: '15m',
+				expiresIn: ACCESS_TOKEN_EXPIRY_TIME,
 			}
 		);
 
@@ -50,7 +52,7 @@ const loginUser = async (req, res) => {
 			{ id },
 			process.env.REFRESH_TOKEN_SECRET,
 			{
-				expiresIn: '7d',
+				expiresIn: REFRESH_TOKEN_EXPIRY_TIME,
 			}
 		);
 
@@ -157,7 +159,7 @@ const refreshAccessToken = async (req, res) => {
 			{ id: user.id },
 			process.env.ACCESS_TOKEN_SECRET,
 			{
-				expiresIn: '15m',
+				expiresIn: ACCESS_TOKEN_EXPIRY_TIME,
 			}
 		);
 
@@ -165,7 +167,7 @@ const refreshAccessToken = async (req, res) => {
 			{ id: user.id },
 			process.env.REFRESH_TOKEN_SECRET,
 			{
-				expiresIn: '7d',
+				expiresIn: REFRESH_TOKEN_EXPIRY_TIME,
 			}
 		);
 
