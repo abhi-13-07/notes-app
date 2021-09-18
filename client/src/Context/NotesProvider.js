@@ -1,4 +1,5 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
+import axios from 'axios';
 import { useAuth } from './AuthProvider';
 import NotesApi from '../Api/NotesApi';
 
@@ -11,15 +12,24 @@ export const useNotes = () => useContext(NotesContext);
 export const NotesProvider = ({ children }) => {
 	const [notes, setNotes] = useState([]);
 	const [error, setError] = useState(null);
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const { accessToken, user } = useAuth();
 
 	useEffect(() => {
+		notesApi.setAccessToken(accessToken);
+	}, [accessToken]);
+
+	useEffect(() => {
+		const source = axios.CancelToken.source();
+
 		const fetchNotes = async () => {
+			console.log('Running notes provider effect');
+
+			setLoading(true);
 			try {
 				const { data, status } = await notesApi.getAllNotes(
 					user.id,
-					accessToken
+					source.token
 				);
 
 				if (status === 200) {
@@ -39,9 +49,10 @@ export const NotesProvider = ({ children }) => {
 		fetchNotes();
 
 		return () => {
-			notesApi.cancelToken.cancel();
+			console.log('cleanup');
+			source.cancel();
 		};
-	}, [accessToken, user.id]);
+	}, [user.id]);
 
 	return (
 		<NotesContext.Provider value={{ notes, setNotes, loading, error }}>

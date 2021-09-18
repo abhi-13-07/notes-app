@@ -9,7 +9,7 @@ const Card = ({ title, body }) => {
 			</div>
 			<div className="action-container">
 				<button className="action text-danger">
-					<i className="far fa-trash-alt"></i>
+					<i className="fas fa-trash"></i>
 					Delete
 				</button>
 				<button className="action text-primary">

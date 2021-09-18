@@ -4,18 +4,22 @@ import { BASE_URL } from './endpoint';
 class NotesApi {
 	constructor() {
 		this.endpoint = BASE_URL;
-		this.cancelToken = axios.CancelToken.source();
+		this.accessToken = '';
 	}
 
-	async getAllNotes(userId, accessToken) {
+	setAccessToken(token) {
+		this.accessToken = token;
+	}
+
+	async getAllNotes(userId, cancelToken) {
 		try {
 			const response = await axios.get(
 				`${this.endpoint}/notes/all?userId=${userId}`,
 				{
 					headers: {
-						Authorization: `Bearer ${accessToken}`,
+						Authorization: `Bearer ${this.accessToken}`,
 					},
-					cancelToken: this.cancelToken.token,
+					cancelToken,
 				}
 			);
 
@@ -24,7 +28,6 @@ class NotesApi {
 				status: response.status,
 			};
 		} catch (err) {
-			console.clear();
 			if (err.response) {
 				const { data, status } = err.response;
 				return {
@@ -32,20 +35,20 @@ class NotesApi {
 					status,
 				};
 			}
-			if (err.request) {
-				console.log(err.request);
+			if (axios.isCancel(err)) {
+				console.log('Request canceled!!');
 				return err.request;
 			}
 		}
 	}
 
-	async addNote(data, accessToken) {
+	async addNote(data, cancelToken) {
 		try {
 			const response = await axios.post(`${this.endpoint}/notes/new`, data, {
 				headers: {
-					Authorization: `Bearer ${accessToken}`,
+					Authorization: `Bearer ${this.accessToken}`,
 				},
-				cancelToken: this.cancelToken,
+				cancelToken,
 			});
 
 			return {
@@ -60,22 +63,23 @@ class NotesApi {
 					status,
 				};
 			}
-			if (err.request) {
+			if (axios.isCancel(err)) {
+				console.log('canceled request');
 				return err.request;
 			}
 		}
 	}
 
-	async updateNote(id, data, accessToken) {
+	async updateNote(id, data, cancelToken) {
 		try {
 			const response = await axios.put(
 				`${this.endpoint}/notes/edit/${id}`,
 				data,
 				{
 					headers: {
-						Authorization: `Bearer ${accessToken}`,
+						Authorization: `Bearer ${this.accessToken}`,
 					},
-					cancelToken: this.cancelToken.token,
+					cancelToken,
 				}
 			);
 
@@ -97,15 +101,15 @@ class NotesApi {
 		}
 	}
 
-	async deleteNote(id, accessToken) {
+	async deleteNote(id, cancelToken) {
 		try {
 			const response = await axios.delete(
 				`${this.endpoint}/notes/delete${id}`,
 				{
 					headers: {
-						Authorization: `Bearer ${accessToken}`,
+						Authorization: `Bearer ${this.accessToken}`,
 					},
-					cancelToken: this.cancelToken,
+					cancelToken,
 				}
 			);
 

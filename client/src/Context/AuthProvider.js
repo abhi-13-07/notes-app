@@ -58,9 +58,15 @@ export const AuthProvider = ({ children }) => {
 		};
 	}, [expiresIn]);
 
+	const resetAuth = () => {
+		setAccessToken('');
+		setUser(null);
+		setExpiresIn(0);
+	};
+
 	return (
 		<AuthContext.Provider
-			value={{ accessToken, user, setAccessToken, loading, setUser }}
+			value={{ accessToken, user, setAccessToken, loading, setUser, resetAuth }}
 		>
 			{children}
 		</AuthContext.Provider>

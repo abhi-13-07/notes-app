@@ -8,18 +8,16 @@ import { AppBar, Avatar, Card, Grid, Input } from '../Components';
 const authApi = new AuthApi();
 
 const Home = () => {
-	const { user } = useAuth();
 	const history = useHistory();
-	const { setAccessToken, setUser } = useAuth();
+	const { user, resetAuth } = useAuth();
 	const { notes, loading, error } = useNotes();
 
 	const handleLogout = async () => {
 		try {
 			logout({
 				success: () => {
+					resetAuth();
 					history.push('/');
-					setAccessToken('');
-					setUser(null);
 				},
 				failure: () => console.log('Error while logging out'),
 			});
@@ -54,8 +52,20 @@ const Home = () => {
 						}}
 					/>
 				</div>
-				<div style={{ cursor: 'pointer' }}>
+				<div className="drop-dwon-container">
 					<Avatar src={user.displayPicture} alt={user.name} size="sm" />
+					<div className="drop-down">
+						<ul>
+							<li>
+								<i className="fas fa-user"></i>
+								My Profile
+							</li>
+							<li onClick={handleLogout}>
+								<i className="fas fa-sign-out-alt"></i>
+								Logout
+							</li>
+						</ul>
+					</div>
 				</div>
 			</AppBar>
 			<section className="section">
