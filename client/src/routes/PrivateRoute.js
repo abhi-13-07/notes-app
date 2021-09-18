@@ -1,5 +1,6 @@
 import { Route, Redirect } from 'react-router-dom';
 import { useAuth } from '../Context/AuthProvider';
+import { NotesProvider } from '../Context/NotesProvider';
 
 const PrivateRoute = ({ children, ...rest }) => {
 	const { accessToken, user, loading } = useAuth();
@@ -10,7 +11,13 @@ const PrivateRoute = ({ children, ...rest }) => {
 	}
 
 	return (
-		<Route {...rest}>{isAuth ? children : <Redirect to="/login" />}</Route>
+		<Route {...rest}>
+			{isAuth ? (
+				<NotesProvider>{children}</NotesProvider>
+			) : (
+				<Redirect to="/login" />
+			)}
+		</Route>
 	);
 };
 

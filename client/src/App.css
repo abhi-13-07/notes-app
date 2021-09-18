@@ -1,6 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap');
+
 :root {
 	--body-bg-color: #f2f0fa;
 	--app-bar-bg-color: white;
+	--card-height: 160px;
+	--card-width: 400px;
+	--danger-color: #f55757;
+	--primary-color: cornflowerblue;
+	--heading-font-family: 'Poppins';
+	--paragraph-font-family: 'Roboto';
 }
 
 * {
@@ -38,4 +46,105 @@ body {
 	height: 120px;
 	width: 120px;
 	border-radius: 50%;
+}
+
+.grid {
+	display: grid;
+	align-items: center;
+}
+
+.col-3 {
+	grid-template-columns: repeat(3, var(--card-width));
+}
+
+.col-4 {
+	grid-template-columns: repeat(4, var(--card-width));
+}
+
+.gap-10 {
+	gap: 10px;
+}
+
+.gap-15 {
+	gap: 15px;
+}
+
+.gap-20 {
+	gap: 20px;
+}
+
+.card {
+	min-height: var(--card-height);
+	max-width: var(--card-width);
+	background-color: white;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+.card-title {
+	font-family: var(--heading-font-family);
+}
+
+.card-body {
+	font-family: var(--paragraph-font-family);
+}
+
+.card:hover .action-container {
+	display: flex;
+	gap: 15px;
+}
+
+.action-container {
+	display: none;
+}
+
+.action-container .action {
+	padding: 10px;
+	border: none;
+	background: none;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.action-container .action i {
+	margin-right: 5px;
+}
+
+.text-danger {
+	color: var(--danger-color);
+	transition: 0.3s;
+}
+
+.text-danger:hover {
+	color: white;
+	background-color: var(--danger-color);
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.text-primary {
+	color: var(--primary-color);
+	transition: 0.3s;
+}
+
+.text-primary:hover {
+	color: white;
+	background-color: var(--primary-color);
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.section {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px 0 20px 0;
+}
+
+.input {
+	border: 1px solid rgb(172, 171, 171);
+	border-radius: 5px;
+	padding: 10px 0 10px 5px;
+	outline: none;
+	width: 450px;
 }
