@@ -3,14 +3,18 @@ import { useAuth } from '../Context/AuthProvider';
 import { useNotes } from '../Context/NotesProvider';
 import AuthApi from '../Api/AuthApi';
 import { useHistory } from 'react-router-dom';
-import { AppBar, Avatar, Card, Grid, Input } from '../Components';
+import { AddNote, AppBar, Avatar, Card, Grid, Input } from '../Components';
+import useWindowWidth from '../hooks/useWindowWidth';
 
 const authApi = new AuthApi();
 
 const Home = () => {
 	const history = useHistory();
 	const { user, resetAuth } = useAuth();
-	const { notes, loading, error } = useNotes();
+	const { notes, loading, error, removeNote, updateNote } = useNotes();
+	const windowWidth = useWindowWidth();
+
+	console.log(windowWidth);
 
 	const handleLogout = async () => {
 		try {
@@ -37,22 +41,49 @@ const Home = () => {
 		}
 	};
 
+	const gridCol = () => {
+		let col = 3;
+
+		if (windowWidth <= 1400) {
+			col = 2;
+		}
+
+		if (windowWidth <= 900) {
+			col = 1;
+		}
+
+		return col;
+	};
+
+	const cardActions = {
+		delete: id => {
+			console.log('Deleting', id);
+			removeNote(id);
+		},
+		update: ({ id, title, body }) => {
+			console.log({ id, title, body });
+			updateNote(id, { title, body });
+		},
+	};
+
 	return (
 		<div>
 			<AppBar>
 				<div>
 					<h2>Notes App</h2>
 				</div>
-				<div>
-					<Input
-						type="search"
-						placeholder="Search by Note Title"
-						onChange={e => {
-							console.log(e.target.value);
-						}}
-					/>
-				</div>
-				<div className="drop-dwon-container">
+				{windowWidth > 715 && (
+					<div style={{ padding: '10px' }}>
+						<Input
+							type="search"
+							placeholder="Search by Note Title"
+							onChange={e => {
+								console.log(e.target.value);
+							}}
+						/>
+					</div>
+				)}
+				<div className="drop-down-container">
 					<Avatar src={user.displayPicture} alt={user.name} size="sm" />
 					<div className="drop-down">
 						<ul>
@@ -68,6 +99,18 @@ const Home = () => {
 					</div>
 				</div>
 			</AppBar>
+
+			<div
+				style={{
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					margin: '10px',
+				}}
+			>
+				<AddNote />
+			</div>
+
 			<section className="section">
 				{error && <h1>Error while fetching notes</h1>}
 				{!error && loading ? (
@@ -77,9 +120,15 @@ const Home = () => {
 						<h2>No Notes</h2>
 					</div>
 				) : (
-					<Grid col="3" gap="15">
+					<Grid col={gridCol()} gap="15">
 						{notes.map(note => (
-							<Card key={note._id} title={note.title} body={note.body} />
+							<Card
+								key={note._id}
+								id={note._id}
+								title={note.title}
+								body={note.body}
+								actions={cardActions}
+							/>
 						))}
 					</Grid>
 				)}

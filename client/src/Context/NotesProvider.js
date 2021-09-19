@@ -54,8 +54,28 @@ export const NotesProvider = ({ children }) => {
 		};
 	}, [user.id]);
 
+	const updateNote = (id, data) => {
+		console.log('updating notes');
+		setNotes(notes => {
+			return notes.map(note => {
+				if (note._id === id) {
+					return { ...note, title: data.title, body: data.body };
+				}
+				return note;
+			});
+		});
+	};
+
+	const removeNote = id => {
+		setNotes(notes => {
+			return notes.filter(note => note._id !== id);
+		});
+	};
+
 	return (
-		<NotesContext.Provider value={{ notes, setNotes, loading, error }}>
+		<NotesContext.Provider
+			value={{ notes, setNotes, loading, error, updateNote, removeNote }}
+		>
 			{children}
 		</NotesContext.Provider>
 	);

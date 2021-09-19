@@ -7,6 +7,8 @@
 	--card-width: 400px;
 	--danger-color: #f55757;
 	--primary-color: cornflowerblue;
+	--success-color: rgb(19, 153, 19);
+	--warinig-color: rgb(241, 241, 50);
 	--heading-font-family: 'Poppins';
 	--paragraph-font-family: 'Roboto';
 }
@@ -50,7 +52,15 @@ body {
 
 .grid {
 	display: grid;
-	align-items: center;
+	align-items: flex-start;
+}
+
+.col-1 {
+	grid-template-columns: var(--card-width);
+}
+
+.col-2 {
+	grid-template-columns: repeat(2, var(--card-width));
 }
 
 .col-3 {
@@ -87,6 +97,7 @@ body {
 
 .card-body {
 	font-family: var(--paragraph-font-family);
+	font-size: 16px;
 }
 
 .card:hover .action-container {
@@ -134,12 +145,87 @@ body {
 	border-radius: 5px;
 }
 
+.text-success {
+	color: var(--success-color);
+	transition: 0.3s;
+}
+
+.text-success:hover {
+	color: white;
+	background-color: var(--success-color);
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.text-warning {
+	color: var(--warinig-color);
+	transition: 0.3s;
+}
+
+.text-warning:hover {
+	color: black;
+	background-color: var(--warinig-color);
+	padding: 10px;
+	border-radius: 5px;
+}
+
 .input {
 	border: 1px solid rgb(172, 171, 171);
 	border-radius: 5px;
 	padding: 10px 0 10px 5px;
 	outline: none;
-	width: 450px;
+	width: var(--card-width);
+}
+
+.add-note {
+	display: grid;
+	background-color: white;
+	border-radius: 5px;
+	position: relative;
+}
+
+.add-note input {
+	border: none;
+	background: none;
+	font-size: 18px;
+}
+
+.add-note textarea {
+	border: none;
+	background: none;
+	height: 50px;
+	font-size: 16px;
+	margin-bottom: 20px;
+	resize: none;
+}
+
+.right {
+	position: absolute;
+	right: 10px;
+	bottom: 5px;
+}
+
+.round-btn {
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	transition: 0.2s;
+	font-size: 18px;
+}
+
+.round-btn:hover {
+	transform: scale(1.1);
+}
+
+.btn-primary {
+	color: white;
+	background-color: var(--primary-color);
 }
 
 .section {
@@ -180,10 +266,17 @@ body {
 	border-bottom: none;
 }
 
-.drop-dwon-container {
+.drop-down-container {
 	cursor: pointer;
 }
 
-.drop-dwon-container:hover .drop-down {
+.drop-down-container:hover .drop-down {
 	display: block;
+}
+
+@media (max-width: 720px) {
+	:root {
+		--card-width: 300px;
+		--card-height: 160px;
+	}
 }
