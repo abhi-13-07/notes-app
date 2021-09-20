@@ -1,20 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAuth } from '../Context/AuthProvider';
 import { useNotes } from '../Context/NotesProvider';
 import AuthApi from '../Api/AuthApi';
 import { useHistory } from 'react-router-dom';
 import { AddNote, AppBar, Avatar, Card, Grid, Input } from '../Components';
 import useWindowWidth from '../hooks/useWindowWidth';
+import NotesApi from '../Api/NotesApi';
 
 const authApi = new AuthApi();
 
+// TODO: add addNote feature, make update and delete api calls
+
+const notesApi = new NotesApi();
+
 const Home = () => {
 	const history = useHistory();
-	const { user, resetAuth } = useAuth();
+	const { accessToken, user, resetAuth } = useAuth();
 	const { notes, loading, error, removeNote, updateNote } = useNotes();
 	const windowWidth = useWindowWidth();
 
-	console.log(windowWidth);
+	useEffect(() => {
+		notesApi.setAccessToken(accessToken);
+	}, [accessToken]);
 
 	const handleLogout = async () => {
 		try {
@@ -56,13 +63,17 @@ const Home = () => {
 	};
 
 	const cardActions = {
-		delete: id => {
+		delete: async id => {
 			console.log('Deleting', id);
 			removeNote(id);
+			const { data } = await notesApi.deleteNote(id);
+			console.log(data);
 		},
-		update: ({ id, title, body }) => {
+		update: async ({ id, title, body }) => {
 			console.log({ id, title, body });
 			updateNote(id, { title, body });
+			const { data } = await notesApi.updateNote(id, { title, body });
+			console.log(data);
 		},
 	};
 

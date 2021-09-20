@@ -26,9 +26,8 @@ const Card = ({ id, title, body, actions }) => {
 						onChange={e => setCardBody(e.target.value)}
 						rows="3"
 						cols="8"
-					>
-						{cardBody}
-					</textarea>
+						defaultValue={cardBody}
+					></textarea>
 				) : (
 					<p>{cardBody}</p>
 				)}

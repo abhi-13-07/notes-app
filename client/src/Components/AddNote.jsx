@@ -23,9 +23,8 @@ const AddNote = () => {
 				placeholder="Take a note"
 				onChange={e => setBody(e.target.value)}
 				onFocus={() => setShowTitle(true)}
-			>
-				{body}
-			</textarea>
+				defaultValue={body}
+			></textarea>
 			<button className="round-btn btn-primary right">
 				<i className="fas fa-plus"></i>
 			</button>

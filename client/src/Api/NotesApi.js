@@ -13,6 +13,7 @@ class NotesApi {
 
 	async getAllNotes(userId, cancelToken) {
 		try {
+			console.log(this.accessToken);
 			const response = await axios.get(
 				`${this.endpoint}/notes/all?userId=${userId}`,
 				{
@@ -103,8 +104,10 @@ class NotesApi {
 
 	async deleteNote(id, cancelToken) {
 		try {
+			console.log(this.accessToken);
+
 			const response = await axios.delete(
-				`${this.endpoint}/notes/delete${id}`,
+				`${this.endpoint}/notes/delete/${id}`,
 				{
 					headers: {
 						Authorization: `Bearer ${this.accessToken}`,
