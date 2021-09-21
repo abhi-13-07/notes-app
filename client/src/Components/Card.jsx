@@ -10,7 +10,7 @@ const Card = ({ id, title, body, actions }) => {
 			{isEditMode ? (
 				<input
 					style={{ width: '100%', marginBottom: '10px' }}
-					className="input"
+					className="input heading"
 					type="text"
 					value={cardTitle}
 					onChange={e => setCardTitle(e.target.value)}
@@ -22,14 +22,14 @@ const Card = ({ id, title, body, actions }) => {
 				{isEditMode ? (
 					<textarea
 						style={{ width: '100%' }}
-						className="input"
+						className="input paragraph"
 						onChange={e => setCardBody(e.target.value)}
 						rows="3"
 						cols="8"
 						defaultValue={cardBody}
 					></textarea>
 				) : (
-					<p>{cardBody}</p>
+					<p>{`${cardBody.slice(0, 50)}...`}</p>
 				)}
 			</div>
 			<div className="action-container">

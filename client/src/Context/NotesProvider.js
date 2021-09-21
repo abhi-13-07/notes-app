@@ -2,6 +2,7 @@ import React, { useState, useEffect, createContext, useContext } from 'react';
 import axios from 'axios';
 import { useAuth } from './AuthProvider';
 import NotesApi from '../Api/NotesApi';
+import { v4 as uuidV4 } from 'uuid';
 
 const notesApi = new NotesApi();
 
@@ -23,8 +24,6 @@ export const NotesProvider = ({ children }) => {
 		const source = axios.CancelToken.source();
 
 		const fetchNotes = async () => {
-			console.log('Running notes provider effect');
-
 			setLoading(true);
 			try {
 				const { data, status } = await notesApi.getAllNotes(
@@ -54,8 +53,9 @@ export const NotesProvider = ({ children }) => {
 		};
 	}, [user.id]);
 
-	const updateNote = (id, data) => {
-		console.log('updating notes');
+	const updateNote = async (id, data) => {
+		const note = notes.find(note => note.noteId === id);
+
 		setNotes(notes => {
 			return notes.map(note => {
 				if (note._id === id) {
@@ -64,17 +64,74 @@ export const NotesProvider = ({ children }) => {
 				return note;
 			});
 		});
+
+		try {
+			const { data: response, status } = await notesApi.updateNote(id, data);
+			if (status !== 200) {
+				console.log('Unable to update the note');
+				return setNotes(notes => [...notes, note]);
+			}
+			console.log(response);
+		} catch (err) {
+			console.log(err);
+			console.log('Unable to update the note');
+			return setNotes(notes => [...notes, note]);
+		}
 	};
 
-	const removeNote = id => {
+	const removeNote = async id => {
+		const note = notes.find(note => note.noteId === id);
 		setNotes(notes => {
-			return notes.filter(note => note._id !== id);
+			return notes.filter(note => note.noteId !== id);
 		});
+
+		try {
+			const { data, status } = await notesApi.deleteNote(id);
+			if (status !== 200) {
+				console.log('Unable to delete the note');
+				return setNotes(notes => [...notes, note]);
+			}
+			console.log(data);
+		} catch (err) {
+			console.log(err);
+			console.log('Unable to delete the note');
+			return setNotes(notes => [...notes, note]);
+		}
+	};
+
+	const addNewNote = async ({ title, body }) => {
+		const noteId = uuidV4();
+		const note = {
+			noteId,
+			title,
+			body,
+		};
+		setNotes(notes => [note, ...notes]);
+		try {
+			const { data, status } = await notesApi.addNote(note);
+			if (status !== 201) {
+				console.log('Unable to add note');
+				return setNotes(notes => notes.filter(note => note.noteId !== noteId));
+			}
+			console.log(data);
+		} catch (err) {
+			console.log(err);
+			console.log('Unable to add note');
+			return setNotes(notes => notes.filter(note => note.noteId !== noteId));
+		}
 	};
 
 	return (
 		<NotesContext.Provider
-			value={{ notes, setNotes, loading, error, updateNote, removeNote }}
+			value={{
+				notes,
+				setNotes,
+				loading,
+				error,
+				updateNote,
+				removeNote,
+				addNewNote,
+			}}
 		>
 			{children}
 		</NotesContext.Provider>

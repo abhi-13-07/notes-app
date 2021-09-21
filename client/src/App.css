@@ -187,15 +187,25 @@ body {
 .add-note input {
 	border: none;
 	background: none;
-	font-size: 18px;
 }
 
 .add-note textarea {
 	border: none;
 	background: none;
 	height: 50px;
-	font-size: 16px;
 	margin-bottom: 20px;
+	resize: none;
+}
+
+.heading {
+	font-size: 18px;
+	font-family: var(--heading-font-family);
+	font-weight: bolder;
+}
+
+.paragraph {
+	font-size: 16px;
+	font-family: var(--paragraph-font-family);
 	resize: none;
 }
 
