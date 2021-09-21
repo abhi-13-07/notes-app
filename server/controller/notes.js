@@ -46,7 +46,7 @@ const updateNote = async (req, res) => {
 	const { id: userId } = req.user;
 
 	try {
-		const note = await Note.findById(noteId);
+		const note = await Note.findOne({ noteId });
 
 		if (note.userId.toString() !== userId) {
 			return res.status(403).json({
@@ -54,7 +54,7 @@ const updateNote = async (req, res) => {
 			});
 		}
 
-		await Note.findByIdAndUpdate(noteId, req.body);
+		await Note.findOneAndUpdate({ noteId }, req.body);
 		res.status(200).json({
 			message: 'Successfully updated note',
 		});
@@ -71,7 +71,7 @@ const deleteNote = async (req, res) => {
 	const { id: userId } = req.user;
 
 	try {
-		const note = await Note.findById(noteId);
+		const note = await Note.findOne({ noteId });
 
 		if (note.userId.toString() !== userId) {
 			return res.status(403).json({
@@ -79,7 +79,7 @@ const deleteNote = async (req, res) => {
 			});
 		}
 
-		await Note.findByIdAndDelete(noteId);
+		await Note.findOneAndDelete({ noteId });
 		res.status(200).json({
 			message: `Successfully deleted ${note.title}`,
 		});

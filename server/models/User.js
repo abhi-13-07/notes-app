@@ -29,7 +29,7 @@ const userSchema = mongoose.Schema(
 			default: Date.now(),
 		},
 	},
-	{ toJson: { virtuals: true } }
+	{ toJson: { virtuals: true }, timestamps: true }
 );
 
 userSchema
