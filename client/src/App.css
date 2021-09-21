@@ -245,7 +245,7 @@ body {
 	padding: 20px 0 20px 0;
 }
 
-.drop-down {
+.drop-down-menu {
 	position: absolute;
 	display: none;
 	top: 68px;
@@ -253,24 +253,24 @@ body {
 	background-color: white;
 	padding: 10px;
 	z-index: 1000;
-	box-shadow: 1px 2px 2px 2px rgba(117, 117, 117, 0.2);
+	box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.2);
 }
 
-.drop-down ul {
+.drop-down-menu ul {
 	padding: 0;
 }
 
-.drop-down ul li {
+.drop-down-menu ul li {
 	list-style: none;
 	padding: 0px 10px 20px 10px;
 	border-bottom: 1px solid rgb(170, 170, 170);
 }
 
-.drop-down ul li i {
+.drop-down-menu ul li i {
 	margin-right: 5px;
 }
 
-.drop-down ul li:last-child {
+.drop-down-menu ul li:last-child {
 	padding-top: 20px;
 	padding-bottom: 0px;
 	border-bottom: none;
@@ -280,7 +280,19 @@ body {
 	cursor: pointer;
 }
 
-.drop-down-container:hover .drop-down {
+.drop-down-container .caret-btn {
+	background: none;
+	border: none;
+	outline: none;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.caret-btn:focus {
+	transform: rotateX(180deg);
+}
+
+.drop-down-active {
 	display: block;
 }
 

@@ -68,37 +68,7 @@ const Home = () => {
 
 	return (
 		<div>
-			<AppBar>
-				<div>
-					<h2>Notes App</h2>
-				</div>
-				{windowWidth > 715 && (
-					<div style={{ padding: '10px' }}>
-						<Input
-							type="search"
-							placeholder="Search by Note Title"
-							onChange={e => {
-								console.log(e.target.value);
-							}}
-						/>
-					</div>
-				)}
-				<div className="drop-down-container">
-					<Avatar src={user.displayPicture} alt={user.name} size="sm" />
-					<div className="drop-down">
-						<ul>
-							<li>
-								<i className="fas fa-user"></i>
-								My Profile
-							</li>
-							<li onClick={handleLogout}>
-								<i className="fas fa-sign-out-alt"></i>
-								Logout
-							</li>
-						</ul>
-					</div>
-				</div>
-			</AppBar>
+			<AppBar user={user} handleLogout={handleLogout} />
 
 			<div
 				style={{
@@ -121,7 +91,7 @@ const Home = () => {
 					<h1>Loading...</h1>
 				) : notes.length === 0 ? (
 					<div>
-						<h2>No Notes</h2>
+						<h4 style={{ color: 'gray' }}>You Haven't Created a Note yet!!</h4>
 					</div>
 				) : (
 					<Grid col={gridCol()} gap="15">
