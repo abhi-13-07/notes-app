@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import AuthApi from '../Api/AuthApi';
 import { useAuth } from '../Context/AuthProvider';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { Input } from '../Components';
 
 const defaultFormError = {
 	email: '',
@@ -92,38 +93,45 @@ const Login = () => {
 	};
 
 	return (
-		<div>
-			<h1>Login</h1>
-			<form onSubmit={handleSubmit}>
-				<div>
-					<label htmlFor="email">Email</label>
+		<section className="center">
+			<div className="bg-white">
+				<h1 className="text-center">Login</h1>
+				<form onSubmit={handleSubmit} className="flex-center-column">
+					<div className="form-group">
+						<label htmlFor="email">Email</label>
+						<Input
+							type="email"
+							id="email"
+							placeholder="Eg: xyz@example.com"
+							onChange={e => setEmail(e.target.value)}
+							value={email}
+						/>
+						{formError.email && <p>{formError.email}</p>}
+					</div>
+					<div className="form-group">
+						<label htmlFor="password">Password</label>
+						<Input
+							type="password"
+							id="password"
+							placeholder="your password"
+							onChange={e => setPassword(e.target.value)}
+							value={password}
+						/>
+						{formError.password && <p>{formError.password}</p>}
+					</div>
 					<input
-						type="email"
-						id="email"
-						placeholder="Eg: xyz@example.com"
-						onChange={e => setEmail(e.target.value)}
-						value={email}
+						type="submit"
+						value={loading ? 'Logging in...' : 'Login'}
+						disabled={!canSubmit || loading}
+						className="btn-block btn-primary"
+						style={{ borderRadius: '5px' }}
 					/>
-					{formError.email && <p>{formError.email}</p>}
+				</form>
+				<div className="text-center" style={{ padding: '10px' }}>
+					<Link to="/register">Register</Link>
 				</div>
-				<div>
-					<label htmlFor="password">Password</label>
-					<input
-						type="password"
-						id="password"
-						placeholder="your password"
-						onChange={e => setPassword(e.target.value)}
-						value={password}
-					/>
-					{formError.password && <p>{formError.password}</p>}
-				</div>
-				<input
-					type="submit"
-					value={loading ? 'Logging in...' : 'Login'}
-					disabled={!canSubmit || loading}
-				/>
-			</form>
-		</div>
+			</div>
+		</section>
 	);
 };
 

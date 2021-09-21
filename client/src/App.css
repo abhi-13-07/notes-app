@@ -7,6 +7,7 @@
 	--card-width: 400px;
 	--danger-color: #f55757;
 	--primary-color: cornflowerblue;
+	--primary-color-disabled: rgb(94, 133, 206);
 	--success-color: rgb(19, 153, 19);
 	--warinig-color: rgb(241, 241, 50);
 	--heading-font-family: 'Poppins';
@@ -174,6 +175,7 @@ body {
 	border-radius: 5px;
 	padding: 10px 0 10px 5px;
 	outline: none;
+	font-size: 16px;
 	width: var(--card-width);
 }
 
@@ -236,6 +238,55 @@ body {
 .btn-primary {
 	color: white;
 	background-color: var(--primary-color);
+	cursor: pointer;
+	border: none;
+}
+
+.btn-primary:disabled {
+	background: var(--primary-color-disabled);
+	cursor: not-allowed;
+}
+
+.bg-white {
+	background-color: white;
+	border-radius: 10px;
+}
+
+.form-group {
+	display: grid;
+	align-items: flex-start;
+	margin: 10px;
+}
+
+.form-group label {
+	margin-bottom: 5px;
+	padding-left: 5px;
+}
+
+.center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.flex-center-column {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 10px;
+}
+
+.btn-block {
+	margin-top: 10px;
+	width: 80%;
+	height: 40px;
+	font-size: 16px;
 }
 
 .section {
@@ -291,6 +342,8 @@ body {
 .drop-down-active {
 	display: block;
 }
+
+/* Login Page styles */
 
 @media (max-width: 720px) {
 	:root {
