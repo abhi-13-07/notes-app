@@ -3,12 +3,10 @@ import { useAuth } from '../Context/AuthProvider';
 import { useNotes } from '../Context/NotesProvider';
 import AuthApi from '../Api/AuthApi';
 import { useHistory } from 'react-router-dom';
-import { AddNote, AppBar, Avatar, Card, Grid, Input } from '../Components';
+import { AddNote, AppBar, Card, Grid } from '../Components';
 import useWindowWidth from '../hooks/useWindowWidth';
 
 const authApi = new AuthApi();
-
-// TODO: add addNote feature, make update and delete api calls
 
 const Home = () => {
 	const history = useHistory();
