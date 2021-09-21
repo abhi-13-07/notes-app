@@ -14,8 +14,7 @@ const AppBar = ({ user, handleLogout }) => {
 					<Avatar src={user.displayPicture} alt={user.name} size="sm" />
 					<button
 						className="caret-btn"
-						onFocus={() => setShowDropDown(true)}
-						onBlur={() => setShowDropDown(false)}
+						onClick={() => setShowDropDown(prev => !prev)}
 					>
 						<i className="fas fa-caret-down"></i>
 					</button>

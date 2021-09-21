@@ -288,10 +288,6 @@ body {
 	cursor: pointer;
 }
 
-.caret-btn:focus {
-	transform: rotateX(180deg);
-}
-
 .drop-down-active {
 	display: block;
 }
