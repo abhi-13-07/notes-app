@@ -4,7 +4,7 @@ const getUserNotes = async (req, res) => {
 	const { userId } = req.query;
 
 	try {
-		const userNotes = await Note.find({ userId });
+		const userNotes = await Note.find({ userId }).sort({ createdAt: 'desc' });
 
 		res.status(200).json({
 			notes: userNotes,
@@ -18,10 +18,11 @@ const getUserNotes = async (req, res) => {
 };
 
 const addNewNote = async (req, res) => {
-	const { title, body } = req.body;
+	const { title, body, noteId } = req.body;
 	const { id: userId } = req.user;
 
 	const note = new Note({
+		noteId,
 		title,
 		body,
 		userId,

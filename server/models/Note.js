@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const noteSchema = mongoose.Schema(
 	{
+		noteId: {
+			type: String,
+			required: true,
+		},
 		title: {
 			type: String,
 			trim: true,
