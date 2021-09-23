@@ -1,6 +1,18 @@
 const { body } = require('express-validator');
 const User = require('../models/User');
 
+const COMMON_PASSWORDS = [
+	'1234567890',
+	'0987654321',
+	'qwerty',
+	'password',
+	'drowssap',
+	'password123',
+	'123456',
+	'!@#$%^&*()',
+	')(*&^%$#@!',
+];
+
 const loginValidator = body('email')
 	.exists({
 		checkFalsy: true,
@@ -43,9 +55,13 @@ const registerValidator = [
 			if (password === req.body.email) {
 				return Promise.reject('You cannot have your email as your password ');
 			}
+			if (COMMON_PASSWORDS.includes(password)) {
+				return Promise.reject('Your password is too common');
+			}
 			if (password !== req.body.confirmPassword) {
 				return Promise.reject('Password does not match');
 			}
+			return Promise.resolve();
 		}),
 ];
 
