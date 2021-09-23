@@ -117,7 +117,7 @@ const registerUser = async (req, res) => {
 };
 
 const refreshAccessToken = async (req, res) => {
-	const refreshToken = req.cookies['RF_TKN'];
+	const refreshToken = req.cookies[process.env.REFRESH_TOKEN_COOKIE_NAME];
 
 	if (!refreshToken) {
 		return res.status(400).json({
@@ -195,7 +195,7 @@ const refreshAccessToken = async (req, res) => {
 };
 
 const logoutUser = (req, res) => {
-	res.clearCookie('RF_TKN');
+	res.clearCookie('process.env.REFRESH_TOKEN_COOKIE_NAME');
 	res.status(200).json({
 		message: 'Successfully Logged out',
 	});
@@ -218,7 +218,7 @@ async function signToken(payload, secrect, options) {
 }
 
 function setRefreshToken(res, payload) {
-	res.cookie('RF_TKN', payload, {
+	res.cookie(process.env.REFRESH_TOKEN_COOKIE_NAME, payload, {
 		httpOnly: true,
 		maxAge: MILLI_SECONDS_IN_A_DAY * 7,
 		sameSite: true,
