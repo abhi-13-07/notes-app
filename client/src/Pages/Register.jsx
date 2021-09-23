@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Input } from '../Components';
+import { Input, Spinner } from '../Components';
 import AuthApi from '../Api/AuthApi';
 
 const defaultForm = {
@@ -117,12 +117,13 @@ const Register = () => {
 							<p className="error-msg">{formError.confirmPassword}</p>
 						)}
 					</div>
-					<input
-						type={loading ? 'Signing up...' : 'Sign up'}
-						className="btn btn-block btn-primary"
+					<button
+						className="btn-block btn-primary"
 						disabled={!canSubmit() || loading}
 						style={{ borderRadius: '5px' }}
-					/>
+					>
+						{loading ? <Spinner size="30" /> : 'Register'}
+					</button>
 				</form>
 				<div className="text-center" style={{ padding: '10px' }}>
 					<Link to="/login">Login</Link>

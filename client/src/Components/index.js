@@ -4,5 +4,6 @@ import Card from './Card';
 import Grid from './Grid';
 import Input from './Input';
 import AddNote from './AddNote';
+import Spinner from './Spinner';
 
-export { AppBar, Avatar, Card, Grid, Input, AddNote };
+export { AppBar, Avatar, Card, Grid, Input, AddNote, Spinner };

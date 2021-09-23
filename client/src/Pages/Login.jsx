@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AuthApi from '../Api/AuthApi';
 import { useAuth } from '../Context/AuthProvider';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { Input } from '../Components';
+import { Input, Spinner } from '../Components';
 
 const defaultFormError = {
 	email: '',
@@ -52,8 +52,6 @@ const Login = () => {
 		try {
 			const success = await login();
 			if (success) {
-				setEmail('');
-				setPassword('');
 				history.push('/');
 			} else {
 				console.log('Error while logging in');
@@ -119,13 +117,13 @@ const Login = () => {
 							<p className="error-msg">{formError.password}</p>
 						)}
 					</div>
-					<input
-						type="submit"
-						value={loading ? 'Logging in...' : 'Login'}
-						disabled={!canSubmit || loading}
+					<button
 						className="btn-block btn-primary"
+						disabled={!canSubmit || loading}
 						style={{ borderRadius: '5px' }}
-					/>
+					>
+						{loading ? <Spinner size="30" /> : 'Login In'}
+					</button>
 				</form>
 				<div className="text-center" style={{ padding: '10px' }}>
 					<Link to="/register">Register</Link>
