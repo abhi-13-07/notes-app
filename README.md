@@ -28,6 +28,7 @@ npm run dev
 ```
 
 ###Attributes
+
 Favicon image: Icons made by [Freepik]("https://www.freepik.com") from [www.flaticon.com]("https://www.flaticon.com/")
 
 Favicon converter: [favicon.io](https://favicon.io/favicon-converter/)
