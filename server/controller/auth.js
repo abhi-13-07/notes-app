@@ -221,7 +221,7 @@ function setRefreshToken(res, payload) {
 	res.cookie(process.env.REFRESH_TOKEN_COOKIE_NAME, payload, {
 		httpOnly: true,
 		maxAge: MILLI_SECONDS_IN_A_DAY * 7,
-		sameSite: true,
+		sameSite: 'None',
 		secure: true,
 	});
 }
