@@ -221,5 +221,7 @@ function setRefreshToken(res, payload) {
 	res.cookie('RF_TKN', payload, {
 		httpOnly: true,
 		maxAge: MILLI_SECONDS_IN_A_DAY * 7,
+		sameSite: true,
+		secure: true,
 	});
 }
