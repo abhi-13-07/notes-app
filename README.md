@@ -2,6 +2,10 @@
 
 This is a **Google Notes Clone** with simple features, build out of **MERN stack**
 
+## Live Demo
+
+To view live preview of this app [click here](https://notes-clone-app.netlify.app/)
+
 ### Folder Structure
 
 - client - frontend (React App)
