@@ -195,7 +195,7 @@ const refreshAccessToken = async (req, res) => {
 };
 
 const logoutUser = (req, res) => {
-	res.clearCookie('process.env.REFRESH_TOKEN_COOKIE_NAME');
+	res.clearCookie(process.env.REFRESH_TOKEN_COOKIE_NAME);
 	res.status(200).json({
 		message: 'Successfully Logged out',
 	});
