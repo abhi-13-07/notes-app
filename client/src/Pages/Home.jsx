@@ -3,7 +3,7 @@ import { useAuth } from '../Context/AuthProvider';
 import { useNotes } from '../Context/NotesProvider';
 import AuthApi from '../Api/AuthApi';
 import { useHistory } from 'react-router-dom';
-import { AddNote, AppBar, Card, Grid } from '../Components';
+import { AddNote, AppBar, Card, Grid, Skeleton } from '../Components';
 import useWindowWidth from '../hooks/useWindowWidth';
 
 const authApi = new AuthApi();
@@ -83,7 +83,11 @@ const Home = () => {
 			<section className="section">
 				{error && <h1>Error while fetching notes</h1>}
 				{!error && loading ? (
-					<h1>Loading...</h1>
+					<Grid col={gridCol()} gap="15">
+						{Array.from({ length: 6 }).map((_i, index) => (
+							<Skeleton key={index} />
+						))}
+					</Grid>
 				) : notes.length === 0 ? (
 					<div>
 						<h4 style={{ color: 'gray' }}>You Haven't Created a Note yet!!</h4>

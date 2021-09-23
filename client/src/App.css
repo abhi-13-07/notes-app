@@ -88,6 +88,7 @@ body {
 	animation: skeleton-animation 1s linear alternate infinite;
 	min-height: var(--card-height);
 	min-width: var(--card-width);
+	border-radius: 10px;
 }
 
 .card {
@@ -399,7 +400,7 @@ body {
 
 @keyframes skeleton-animation {
 	0% {
-		background-color: hsl(200, 20%, 70%);
+		background-color: hsl(200, 20%, 80%);
 	}
 
 	100% {
