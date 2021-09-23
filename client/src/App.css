@@ -84,6 +84,12 @@ body {
 	gap: 20px;
 }
 
+.skeleton {
+	animation: skeleton-animation 1s linear alternate infinite;
+	min-height: var(--card-height);
+	min-width: var(--card-width);
+}
+
 .card {
 	min-height: var(--card-height);
 	max-width: var(--card-width);
@@ -318,6 +324,16 @@ body {
 	width: 30px;
 }
 
+.spinner-50 {
+	height: 50px;
+	width: 50px;
+}
+
+.spinner-70 {
+	height: 70px;
+	width: 70px;
+}
+
 .section {
 	display: flex;
 	align-items: center;
@@ -378,5 +394,15 @@ body {
 	:root {
 		--card-width: 300px;
 		--card-height: 160px;
+	}
+}
+
+@keyframes skeleton-animation {
+	0% {
+		background-color: hsl(200, 20%, 70%);
+	}
+
+	100% {
+		background-color: hsl(200, 20%, 95%);
 	}
 }
