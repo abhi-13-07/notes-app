@@ -13,7 +13,6 @@ class NotesApi {
 
 	async getAllNotes(userId, cancelToken) {
 		try {
-			console.log(this.accessToken);
 			const response = await axios.get(
 				`${this.endpoint}/notes/all?userId=${userId}`,
 				{

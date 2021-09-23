@@ -18,9 +18,9 @@ const Home = () => {
 	const handleLogout = async () => {
 		try {
 			logout({
-				success: () => {
+				success: params => {
 					resetAuth();
-					history.push('/');
+					history.push('/', params);
 				},
 				failure: () => console.log('Error while logging out'),
 			});
@@ -31,10 +31,8 @@ const Home = () => {
 
 	const logout = async ({ success, failure }) => {
 		const { data, status } = await authApi.logout();
-		console.log(data);
-		console.log(status);
 		if (status === 200) {
-			success();
+			success({ msg: data.message });
 		} else {
 			failure();
 		}
@@ -59,7 +57,6 @@ const Home = () => {
 			removeNote(id);
 		},
 		update: async ({ id, title, body }) => {
-			console.log({ id, title, body });
 			updateNote(id, { title, body });
 		},
 	};

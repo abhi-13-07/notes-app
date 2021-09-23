@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AuthApi from '../Api/AuthApi';
 import { useAuth } from '../Context/AuthProvider';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Input } from '../Components';
 
 const defaultFormError = {
@@ -11,10 +11,6 @@ const defaultFormError = {
 
 const authApi = new AuthApi();
 
-/* 
-  TODO: complete login, add validation
-*/
-
 const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -22,6 +18,9 @@ const Login = () => {
 	const { setAccessToken, setUser } = useAuth();
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
+	const location = useLocation();
+
+	const { msg } = location?.state || { msg: null };
 
 	const canSubmit =
 		(email && password) || formError.password || formError.email;
@@ -77,11 +76,9 @@ const Login = () => {
 				return true;
 			} else {
 				if (data.message.includes('Password')) {
-					console.log('found password error');
 					setFormError(prev => ({ ...prev, password: data.message }));
 				}
-				if (data.message.includes('registred')) {
-					console.log('found email error');
+				if (data.message.includes('registered')) {
 					setFormError(prev => ({ ...prev, email: data.message }));
 				}
 				setLoading(false);
@@ -96,6 +93,7 @@ const Login = () => {
 		<section className="center">
 			<div className="bg-white">
 				<h1 className="text-center">Login</h1>
+				{msg && <div className="alert-success">{msg}</div>}
 				<form onSubmit={handleSubmit} className="flex-center-column">
 					<div className="form-group">
 						<label htmlFor="email">Email</label>
@@ -106,7 +104,7 @@ const Login = () => {
 							onChange={e => setEmail(e.target.value)}
 							value={email}
 						/>
-						{formError.email && <p>{formError.email}</p>}
+						{formError.email && <p className="error-msg">{formError.email}</p>}
 					</div>
 					<div className="form-group">
 						<label htmlFor="password">Password</label>
@@ -117,7 +115,9 @@ const Login = () => {
 							onChange={e => setPassword(e.target.value)}
 							value={password}
 						/>
-						{formError.password && <p>{formError.password}</p>}
+						{formError.password && (
+							<p className="error-msg">{formError.password}</p>
+						)}
 					</div>
 					<input
 						type="submit"

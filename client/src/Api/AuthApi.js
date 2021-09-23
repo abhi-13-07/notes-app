@@ -32,12 +32,13 @@ class AuthApi {
 		}
 	}
 
-	async register({ name, email, password }) {
+	async register({ name, email, password, confirmPassword }) {
 		try {
 			const response = await axios.post(`${this.endpoint}/auth/register`, {
 				name,
 				email,
 				password,
+				confirmPassword,
 			});
 			return { data: response.data, status: response.status };
 		} catch (err) {

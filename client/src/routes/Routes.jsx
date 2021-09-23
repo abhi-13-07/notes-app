@@ -1,6 +1,7 @@
 import { BrowserRouter, Switch } from 'react-router-dom';
 import Home from '../Pages/Home';
 import Login from '../Pages/Login';
+import Register from '../Pages/Register';
 import PrivateRoute from './PrivateRoute';
 import RestrictAuth from './RestrictAuth';
 
@@ -15,7 +16,7 @@ const Routes = () => {
 					<Login />
 				</RestrictAuth>
 				<RestrictAuth exact path="/register">
-					<h1>Register</h1>
+					<Register />
 				</RestrictAuth>
 			</Switch>
 		</BrowserRouter>
