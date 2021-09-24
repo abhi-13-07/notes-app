@@ -197,8 +197,8 @@ const refreshAccessToken = async (req, res) => {
 const logoutUser = (req, res) => {
 	res.clearCookie(process.env.REFRESH_TOKEN_COOKIE_NAME, {
 		httpOnly: true,
-		secure: true,
-		sameSite: 'None',
+		secure: process.env.NODE_ENV === 'production',
+		sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
 	});
 	res.status(200).json({
 		message: 'Successfully Logged out',
@@ -225,7 +225,7 @@ function setRefreshToken(res, payload) {
 	res.cookie(process.env.REFRESH_TOKEN_COOKIE_NAME, payload, {
 		httpOnly: true,
 		maxAge: MILLI_SECONDS_IN_A_DAY * 7,
-		sameSite: 'None',
-		secure: true,
+		secure: process.env.NODE_ENV === 'production',
+		sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
 	});
 }

@@ -15,6 +15,7 @@ const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
 const notesRouter = require('./routes/notes');
 
+app.set('trust proxy', 1);
 app.use(
 	cors({
 		origin: process.env.CLIENT_URL,
