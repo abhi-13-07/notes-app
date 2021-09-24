@@ -22,7 +22,9 @@ const userSchema = mongoose.Schema(
 		},
 		hashedPassword: {
 			type: String,
-			required: true,
+		},
+		googleId: {
+			type: String,
 		},
 		createdAt: {
 			type: Date,
