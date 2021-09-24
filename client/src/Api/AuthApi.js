@@ -32,6 +32,31 @@ class AuthApi {
 		}
 	}
 
+	async googleLogin(tokenId) {
+		try {
+			const response = await axios.post(
+				`${this.endpoint}/auth/verify-google-login`,
+				{
+					tokenId,
+				},
+				{
+					withCredentials: true,
+				}
+			);
+			return { data: response.data, status: response.status };
+		} catch (err) {
+			console.log(err);
+			if (err.response) {
+				const response = err.response;
+				return { data: response.data, stauts: response.status };
+			}
+
+			if (err.request) {
+				return err.request;
+			}
+		}
+	}
+
 	async register({ name, email, password, confirmPassword }) {
 		try {
 			const response = await axios.post(`${this.endpoint}/auth/register`, {
