@@ -2,14 +2,10 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 const { sign, verify } = require('jsonwebtoken');
-const { OAuth2Client } = require('google-auth-library');
-const findOrCreateUser = require('../helper/findOrCreateUser');
 
 const MILLI_SECONDS_IN_A_DAY = 1000 * 60 * 60 * 24;
 const ACCESS_TOKEN_EXPIRY_TIME = process.env.ACCESS_TOKEN_EXPIRY_TIME;
 const REFRESH_TOKEN_EXPIRY_TIME = process.env.REFRESH_TOKEN_EXPIRY_TIME;
-
-const googleOAuthClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const loginUser = async (req, res) => {
 	const errors = validationResult(req);
@@ -70,6 +66,7 @@ const loginUser = async (req, res) => {
 				lastName,
 				name,
 				displayPicture,
+				email,
 				createdAt,
 				updatedAt,
 			},
@@ -78,62 +75,6 @@ const loginUser = async (req, res) => {
 	} catch (err) {
 		console.error('Login: ', err);
 		res.status(500).json({
-			message: err.message,
-		});
-	}
-};
-
-const verifyGoogleLogin = async (req, res) => {
-	const { tokenId } = req.body;
-	try {
-		const token = await googleOAuthClient.verifyIdToken({
-			idToken: tokenId,
-			audience: process.env.GOOGLE_CLIENT_ID,
-		});
-
-		const {
-			name,
-			email,
-			picture: displayPicture,
-			sub: googleId,
-		} = token.getPayload();
-
-		const user = await findOrCreateUser(
-			{ $or: [{ email }, { googleId }] },
-			{ name, email, displayPicture, googleId }
-		);
-
-		const accessToken = await signToken(
-			{ id: user.id },
-			process.env.ACCESS_TOKEN_SECRET,
-			{
-				expiresIn: process.env.ACCESS_TOKEN_EXPIRY_TIME,
-			}
-		);
-
-		const refreshToken = await signToken(
-			{ id: user.id },
-			process.env.REFRESH_TOKEN_SECRET,
-			{
-				expiresIn: process.env.REFRESH_TOKEN_EXPIRY_TIME,
-			}
-		);
-
-		setRefreshToken(res, refreshToken);
-
-		return res.status(201).json({
-			user: {
-				id: user.id,
-				name: user.name,
-				email: user.email,
-				displayPicture: user.displayPicture,
-				createdAt: user.createdAt,
-			},
-			accessToken,
-		});
-	} catch (err) {
-		console.log('verify Google login', err);
-		res.stauts(500).json({
 			message: err.message,
 		});
 	}
@@ -213,6 +154,7 @@ const refreshAccessToken = async (req, res) => {
 			displayPicture,
 			createdAt,
 			updatedAt,
+			email,
 		} = user;
 
 		const accessToken = await signToken(
@@ -240,6 +182,7 @@ const refreshAccessToken = async (req, res) => {
 				firstName,
 				lastName,
 				name,
+				email,
 				displayPicture,
 				createdAt,
 				updatedAt,
@@ -267,7 +210,6 @@ const logoutUser = (req, res) => {
 
 module.exports = {
 	loginUser,
-	verifyGoogleLogin,
 	registerUser,
 	refreshAccessToken,
 	logoutUser,

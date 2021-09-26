@@ -4,7 +4,6 @@ const {
 	registerUser,
 	refreshAccessToken,
 	logoutUser,
-	verifyGoogleLogin,
 } = require('../controller/auth');
 const {
 	loginValidator,
@@ -12,8 +11,6 @@ const {
 } = require('../middlewares/formValidation');
 
 router.post('/login', loginValidator, loginUser);
-
-router.post('/verify-google-login', verifyGoogleLogin);
 
 router.post('/register', registerValidator, registerUser);
 
