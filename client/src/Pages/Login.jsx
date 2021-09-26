@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AuthApi from '../Api/AuthApi';
 import { useAuth } from '../Context/AuthProvider';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { GoogleLoginButton, Input, Spinner } from '../Components';
+import { Input, Spinner } from '../Components';
 
 const defaultFormError = {
 	email: '',
@@ -37,31 +37,6 @@ const Login = () => {
 		}
 
 		return true;
-	};
-
-	const handleGoogleSuccess = async googleResponse => {
-		const { tokenId } = googleResponse;
-		setLoading(true);
-		try {
-			const { data, status } = await authApi.googleLogin(tokenId);
-
-			if (status !== 201) {
-				console.log(data);
-				setLoading(false);
-				return console.log('error while google login');
-			}
-
-			setAccessToken(data.accessToken);
-			setUser(data.user);
-			setLoading(false);
-			history.push('/');
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-	const handleGoogleFailure = response => {
-		console.log(response);
 	};
 
 	const handleSubmit = async e => {
@@ -152,14 +127,6 @@ const Login = () => {
 				</form>
 				<div className="text-center" style={{ padding: '10px' }}>
 					<Link to="/register">Register</Link>
-				</div>
-				<div className="text-center">Or</div>
-				<div className="text-center" style={{ margin: '10px' }}>
-					<GoogleLoginButton
-						clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-						onSuccess={handleGoogleSuccess}
-						onFailure={handleGoogleFailure}
-					/>
 				</div>
 			</div>
 		</section>
