@@ -39,28 +39,28 @@ const Profile = () => {
 					}}
 				>
 					<div style={{ marginBottom: '10px' }}>
-						<span>
+						<span className="flex-center-between">
 							<strong>Firstname: </strong>
 							<span>{user?.firstName}</span>
 						</span>
 					</div>
 
 					<div style={{ marginBottom: '10px' }}>
-						<span>
+						<span className="flex-center-between">
 							<strong>Lastname: </strong>
-							<span>{user?.lastName}</span>
+							<span>{user?.lastName ?? '----'}</span>
 						</span>
 					</div>
 
 					<div style={{ marginBottom: '10px' }}>
-						<span>
+						<span className="flex-center-between">
 							<strong>Email: </strong>
 							<span>{user?.email}</span>
 						</span>
 					</div>
 
 					<div style={{ marginBottom: '10px' }}>
-						<span>
+						<span className="flex-center-between">
 							<strong>Created At: </strong>
 							<span>
 								{new Date(user?.createdAt).toLocaleString('en-GB', {
@@ -70,14 +70,13 @@ const Profile = () => {
 									hour12: true,
 									hour: '2-digit',
 									minute: '2-digit',
-									second: '2-digit',
 								})}
 							</span>
 						</span>
 					</div>
 
 					<div style={{ marginBottom: '10px' }}>
-						<span>
+						<span className="flex-center-between">
 							<strong>Total Notes: </strong>
 							<span>{notes?.length}</span>
 						</span>
@@ -86,7 +85,9 @@ const Profile = () => {
 			</section>
 
 			<div className="text-center" style={{ marginTop: '15px' }}>
-				<Link to="/">Back To Home</Link>
+				<Link to="/" className="btn-primary-box">
+					Back To Home
+				</Link>
 			</div>
 		</div>
 	);

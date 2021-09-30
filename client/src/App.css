@@ -295,11 +295,27 @@ body {
 	padding: 10px;
 }
 
+.flex-center-between {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
 .btn-block {
 	margin-top: 10px;
 	width: 80%;
 	height: 40px;
 	font-size: 16px;
+}
+
+.btn-primary-box {
+	background-color: var(--primary-color);
+	color: white;
+	border-radius: 5px;
+	outline: none;
+	border: none;
+	text-decoration: none;
+	padding: 10px;
 }
 
 .alert-success {
