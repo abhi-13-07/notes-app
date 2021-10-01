@@ -48,9 +48,27 @@ const updateUser = async (req, res) => {
 			new: true,
 		}).select('-hashedPassword');
 
+		const {
+			id: userId,
+			firstName,
+			lastName,
+			name,
+			displayPicture,
+			createdAt,
+			updatedAt,
+		} = user;
+
 		res.status(200).json({
 			message: 'Successfully Updated!',
-			user: { ...user, id: user.id },
+			user: {
+				id: userId,
+				firstName,
+				lastName,
+				name,
+				displayPicture,
+				createdAt,
+				updatedAt,
+			},
 		});
 	} catch (err) {
 		console.log('Update user: ', err.message);
