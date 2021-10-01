@@ -1,0 +1,8 @@
+-Update User
+  -Server
+    - send updated user
+  -Client
+    - set updated user and display success message
+    
+-Add image upload functionality
+  -use filepond for image enoding and editing

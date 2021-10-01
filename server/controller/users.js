@@ -44,12 +44,13 @@ const updateUser = async (req, res) => {
 
 	console.log(req.body);
 	try {
-		await User.findByIdAndUpdate(id, update, {
+		const user = await User.findByIdAndUpdate(id, update, {
 			new: true,
-		});
+		}).select('-hashedPassword');
 
 		res.status(200).json({
 			message: 'Successfully Updated!',
+			user: { ...user, id: user.id },
 		});
 	} catch (err) {
 		console.log('Update user: ', err.message);

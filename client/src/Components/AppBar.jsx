@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Avatar } from '.';
+import { Link } from 'react-router-dom';
 
 const AppBar = ({ user, handleLogout }) => {
 	const [showDropDown, setShowDropDown] = useState(false);
@@ -16,14 +17,20 @@ const AppBar = ({ user, handleLogout }) => {
 						className="caret-btn"
 						onClick={() => setShowDropDown(prev => !prev)}
 					>
-						<i className="fas fa-caret-down"></i>
+						<i
+							className={`fas ${
+								showDropDown ? 'fa-caret-up' : 'fa-caret-down'
+							}`}
+						></i>
 					</button>
 				</div>
 				<div className={`drop-down-menu ${showDropDown && 'drop-down-active'}`}>
 					<ul>
 						<li>
-							<i className="fas fa-user"></i>
-							My Profile
+							<Link to="/me" style={{ textDecoration: 'none', color: 'black' }}>
+								<i className="fas fa-user"></i>
+								My Profile
+							</Link>
 						</li>
 						<li onClick={handleLogout}>
 							<i className="fas fa-sign-out-alt"></i>

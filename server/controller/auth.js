@@ -66,6 +66,7 @@ const loginUser = async (req, res) => {
 				lastName,
 				name,
 				displayPicture,
+				email,
 				createdAt,
 				updatedAt,
 			},
@@ -153,6 +154,7 @@ const refreshAccessToken = async (req, res) => {
 			displayPicture,
 			createdAt,
 			updatedAt,
+			email,
 		} = user;
 
 		const accessToken = await signToken(
@@ -180,6 +182,7 @@ const refreshAccessToken = async (req, res) => {
 				firstName,
 				lastName,
 				name,
+				email,
 				displayPicture,
 				createdAt,
 				updatedAt,

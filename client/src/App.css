@@ -9,7 +9,7 @@
 	--primary-color: cornflowerblue;
 	--primary-color-disabled: rgb(94, 133, 206);
 	--success-color: rgb(19, 153, 19);
-	--warinig-color: rgb(241, 241, 50);
+	--warinig-color: rgb(236, 236, 38);
 	--heading-font-family: 'Poppins';
 	--paragraph-font-family: 'Roboto';
 }
@@ -260,6 +260,11 @@ body {
 	cursor: not-allowed;
 }
 
+.btn-success-box {
+	background-color: var(--success-color);
+	color: white;
+}
+
 .bg-white {
 	background-color: white;
 	border-radius: 10px;
@@ -295,11 +300,36 @@ body {
 	padding: 10px;
 }
 
+.flex-center-between {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
 .btn-block {
 	margin-top: 10px;
 	width: 80%;
 	height: 40px;
 	font-size: 16px;
+}
+
+.btn {
+	border-radius: 5px;
+	outline: none;
+	border: none;
+	text-decoration: none;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.btn-primary-box {
+	background-color: var(--primary-color);
+	color: white;
+}
+
+.btn-warning-box {
+	background-color: var(--warinig-color);
+	color: black;
 }
 
 .alert-success {
