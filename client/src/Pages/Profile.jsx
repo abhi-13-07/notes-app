@@ -1,12 +1,45 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { AppBar, Avatar } from '../Components';
 import { useAuth } from '../Context/AuthProvider';
 import { useNotes } from '../Context/NotesProvider';
+import UserApi from '../Api/UserApi';
+
+const userApi = new UserApi();
 
 const Profile = () => {
-	const { user } = useAuth();
+	const { user, accessToken, setUser } = useAuth();
 	const { notes } = useNotes();
+	const [isEditMode, setIsEditMode] = useState(false);
+	const [userDetails, setUserDetails] = useState(user);
+	const [loading, setLoading] = useState(false);
+	const history = useHistory();
+
+	useEffect(() => {
+		userApi.setAccessToken(accessToken);
+	}, [accessToken]);
+
+	const handleUpdate = async () => {
+		try {
+			setLoading(true);
+			const { data, status } = await userApi.updateUser(
+				{
+					name: `${userDetails.firstName} ${userDetails.lastName}`,
+				},
+				user.id
+			);
+
+			if (status === 200) {
+				setLoading(false);
+				setUser(data.user);
+				history.push('/');
+			} else {
+				history.push('/me');
+			}
+		} catch (err) {
+			console.log('Updating User', err);
+		}
+	};
 
 	return (
 		<div>
@@ -41,14 +74,44 @@ const Profile = () => {
 					<div style={{ marginBottom: '10px' }}>
 						<span className="flex-center-between">
 							<strong>Firstname: </strong>
-							<span>{user?.firstName}</span>
+							{isEditMode ? (
+								<input
+									className="input"
+									type="text"
+									name="firstName"
+									value={userDetails.firstName}
+									onChange={e =>
+										setUserDetails(prev => ({
+											...prev,
+											[e.target.name]: e.target.value,
+										}))
+									}
+								/>
+							) : (
+								<span>{user?.firstName}</span>
+							)}
 						</span>
 					</div>
 
 					<div style={{ marginBottom: '10px' }}>
 						<span className="flex-center-between">
 							<strong>Lastname: </strong>
-							<span>{user?.lastName ?? '----'}</span>
+							{isEditMode ? (
+								<input
+									className="input"
+									type="text"
+									name="lastName"
+									value={userDetails.lastName}
+									onChange={e =>
+										setUserDetails(prev => ({
+											...prev,
+											[e.target.name]: e.target.value,
+										}))
+									}
+								/>
+							) : (
+								<span>{user?.lastName ?? '----'}</span>
+							)}
 						</span>
 					</div>
 
@@ -84,8 +147,32 @@ const Profile = () => {
 				</div>
 			</section>
 
-			<div className="text-center" style={{ marginTop: '15px' }}>
-				<Link to="/" className="btn-primary-box">
+			<div className="text-center" style={{ margin: '15px' }}>
+				<button
+					style={{ margin: '10px' }}
+					className="btn btn-warning-box"
+					onClick={() => setIsEditMode(prev => !prev)}
+				>
+					<i
+						className={`fas ${isEditMode ? 'fa-times' : 'fa-pen'}`}
+						style={{ marginRight: '10px' }}
+					></i>
+					{isEditMode ? 'Cancel' : 'Edit'}
+				</button>
+
+				{isEditMode && (
+					<button
+						disabled={loading}
+						className="btn btn-success-box"
+						onClick={handleUpdate}
+					>
+						<i className="fas fa-check" style={{ marginRight: '10px' }}></i>
+						Udpate
+					</button>
+				)}
+			</div>
+			<div className="text-center">
+				<Link to="/" className="btn btn-primary-box" style={{ margin: '10px' }}>
 					Back To Home
 				</Link>
 			</div>
