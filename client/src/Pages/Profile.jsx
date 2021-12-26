@@ -45,7 +45,6 @@ const Profile = () => {
 	};
 
 	const isDefaultDisplayPicture = picUrl => {
-		console.log(/https:\/\/t4\.ftcdn\.net\//.test(picUrl), picUrl);
 		return /https:\/\/t4\.ftcdn\.net\//.test(picUrl);
 	};
 
