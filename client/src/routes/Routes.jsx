@@ -1,10 +1,10 @@
-import { BrowserRouter, Switch } from 'react-router-dom';
-import Home from '../Pages/Home';
-import Login from '../Pages/Login';
-import Profile from '../Pages/Profile';
-import Register from '../Pages/Register';
-import PrivateRoute from './PrivateRoute';
-import RestrictAuth from './RestrictAuth';
+import { BrowserRouter, Switch } from "react-router-dom";
+import Home from "../Pages/Home";
+import Login from "../Pages/Login";
+import Profile from "../Pages/Profile";
+import Register from "../Pages/Register";
+import PrivateRoute from "./PrivateRoute";
+import RestrictAuth from "./RestrictAuth";
 
 const Routes = () => {
 	return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const Card = ({ id, title, body, actions }) => {
 	const [isEditMode, setIsEditMode] = useState();
@@ -9,19 +9,19 @@ const Card = ({ id, title, body, actions }) => {
 		<div className="card">
 			{isEditMode ? (
 				<input
-					style={{ width: '100%', marginBottom: '10px' }}
+					style={{ width: "100%", marginBottom: "10px" }}
 					className="input heading"
 					type="text"
 					value={cardTitle}
 					onChange={e => setCardTitle(e.target.value)}
 				/>
 			) : (
-				<h3 className="card-title">{cardTitle}</h3>
+				<h1 className="card-title">{cardTitle}</h1>
 			)}
 			<div className="card-body">
 				{isEditMode ? (
 					<textarea
-						style={{ width: '100%' }}
+						style={{ width: "100%" }}
 						className="input paragraph"
 						onChange={e => setCardBody(e.target.value)}
 						rows="3"
