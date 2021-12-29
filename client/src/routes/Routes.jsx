@@ -1,4 +1,5 @@
 import { BrowserRouter, Switch } from "react-router-dom";
+import { AuthProvider } from "../Context/AuthProvider";
 import Home from "../Pages/Home";
 import Login from "../Pages/Login";
 import Profile from "../Pages/Profile";
@@ -10,21 +11,23 @@ const Routes = () => {
 	return (
 		<BrowserRouter>
 			<Switch>
-				<RestrictAuth exact path="/login">
-					<Login />
-				</RestrictAuth>
+				<AuthProvider>
+					<RestrictAuth exact path="/login">
+						<Login />
+					</RestrictAuth>
 
-				<RestrictAuth exact path="/register">
-					<Register />
-				</RestrictAuth>
+					<RestrictAuth exact path="/register">
+						<Register />
+					</RestrictAuth>
 
-				<PrivateRoute exact path="/">
-					<Home />
-				</PrivateRoute>
+					<PrivateRoute exact path="/">
+						<Home />
+					</PrivateRoute>
 
-				<PrivateRoute exact path="/me">
-					<Profile />
-				</PrivateRoute>
+					<PrivateRoute exact path="/me">
+						<Profile />
+					</PrivateRoute>
+				</AuthProvider>
 			</Switch>
 		</BrowserRouter>
 	);
